@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "365964332193",
+    "project_id": "chrome-keys-254020",
+    "storage_bucket": "chrome-keys-254020.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:365964332193:android:463c787a9e642fd5ef34e0",
+        "android_client_info": {
+          "package_name": "com.compscicoolkids.carey"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "365964332193-b34tnt8sr0r1cji0p7a72u1gnpj9hro8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtzgmdxNIX-xIBvNa6TiDAZg6dv_a6Qmg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "365964332193-b34tnt8sr0r1cji0p7a72u1gnpj9hro8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

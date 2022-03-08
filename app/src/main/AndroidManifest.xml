@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.carey">
+    package="com.compscicoolkids.carey">
 
     <application
         android:allowBackup="true"
@@ -9,8 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Carey">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDg1QC8lUlbM3gQO1za_TqUXGSz9Z-nYk0" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.compscicoolkids.carey.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

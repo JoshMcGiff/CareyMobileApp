@@ -1,4 +1,4 @@
-package com.example.carey;
+package com.compscicoolkids.carey;
 
 import androidx.appcompat.app.AppCompatActivity;
 
