@@ -14,13 +14,21 @@
       },
       "oauth_client": [
         {
+          "client_id": "365964332193-a60o6vhb8b48026nra0j0mmjh1l3evll.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.compscicoolkids.carey",
+            "certificate_hash": "b1d7c0d50eabd6752edb1b45372568b3645088b7"
+          }
+        },
+        {
           "client_id": "365964332193-b34tnt8sr0r1cji0p7a72u1gnpj9hro8.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCtzgmdxNIX-xIBvNa6TiDAZg6dv_a6Qmg"
+          "current_key": "AIzaSyBCVposeLCNVf380NPBuFvVZPotPTeqxKg"
         }
       ],
       "services": {
