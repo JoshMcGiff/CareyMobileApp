@@ -3,6 +3,7 @@ package com.compscicoolkids.carey;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
             // sign-in flow using the back button. Otherwise check
             // response.getError().getErrorCode() and handle the error.
             // ...
+            Toast.makeText(getApplicationContext(), R.string.failed_login, Toast.LENGTH_LONG).show();
         }
     }
 

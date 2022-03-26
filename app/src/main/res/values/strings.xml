@@ -25,4 +25,5 @@
     <string name="reminders">Reminders</string>
     <string name="water_checks">Water Checks:</string>
     <string name="notify_me">Notify Me</string>
+    <string name="failed_login">Login failed, leaderboard feature won\'t work!</string>
 </resources>
