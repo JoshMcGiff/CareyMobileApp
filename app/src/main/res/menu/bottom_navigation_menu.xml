@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@id/leaderboard"
+        android:enabled="true"
+        android:icon="@drawable/icon_leaderboard"
+        android:title="@string/text_label_leaderboard"/>
+    <item
+        android:id="@id/reminders"
+        android:enabled="true"
+        android:icon="@drawable/icon_reminders"
+        android:title="@string/text_label_reminders"/>
+    <item
+        android:id="@id/workouts"
+        android:enabled="true"
+        android:icon="@drawable/icon_workouts"
+        android:title="@string/text_label_workouts"/>
+    <item
+        android:id="@id/settingsFragment"
+        android:enabled="true"
+        android:icon="@drawable/icon_settings"
+        android:title="@string/text_label_settings"/>
+</menu>

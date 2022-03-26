@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navgraph"
+    app:startDestination="@id/workouts">
+
+    <fragment
+        android:id="@+id/workouts"
+        android:name="com.compscicoolkids.carey.WorkoutsFragment"
+        android:label="fragment_workouts"
+        tools:layout="@layout/fragment_workouts" >
+    </fragment>
+    <fragment
+        android:id="@+id/reminders"
+        android:name="com.compscicoolkids.carey.RemindersFragment"
+        android:label="fragment_reminders"
+        tools:layout="@layout/fragment_reminders" >
+    </fragment>
+    <fragment
+        android:id="@+id/leaderboard"
+        android:name="com.compscicoolkids.carey.LeaderboardFragment"
+        android:label="fragment_leaderboard"
+        tools:layout="@layout/fragment_leaderboard" >
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.compscicoolkids.carey.SettingsFragment"
+        android:label="SettingsFragment" />
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.compscicoolkids.carey.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" />
+</navigation>
