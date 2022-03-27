@@ -305,7 +305,7 @@ public class RemindersFragment extends Fragment {
             manager.createNotificationChannel(channel);
             NotificationCompat.Builder notification =
                     new NotificationCompat.Builder(getContext(), "Posture Reminder");
-            Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.mipmap.droplet_foreground);
+            Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.mipmap.posture_foreground);
 
             notification
                     .setSmallIcon(R.mipmap.ic_launcher)
@@ -336,7 +336,7 @@ public class RemindersFragment extends Fragment {
             manager.createNotificationChannel(channel);
             NotificationCompat.Builder notification =
                     new NotificationCompat.Builder(getContext(), "Stand Reminder");
-            Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.mipmap.droplet_foreground);
+            Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.mipmap.stand_foreground);
 
             notification
                     .setSmallIcon(R.mipmap.ic_launcher)
