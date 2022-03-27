@@ -35,17 +35,17 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-//        // Choose authentication providers
-//        List<AuthUI.IdpConfig> providers = Arrays.asList(
-//                new AuthUI.IdpConfig.EmailBuilder().build(),
-//                new AuthUI.IdpConfig.GoogleBuilder().build());
-//
-//        // Create and launch sign-in intent
-//        Intent signInIntent = AuthUI.getInstance()
-//                .createSignInIntentBuilder()
-//                .setAvailableProviders(providers)
-//                .build();
-//        signInLauncher.launch(signInIntent);
+        // Choose authentication providers
+        List<AuthUI.IdpConfig> providers = Arrays.asList(
+                new AuthUI.IdpConfig.EmailBuilder().build(),
+                new AuthUI.IdpConfig.GoogleBuilder().build());
+
+        // Create and launch sign-in intent
+        Intent signInIntent = AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .build();
+        signInLauncher.launch(signInIntent);
 
     }
 
