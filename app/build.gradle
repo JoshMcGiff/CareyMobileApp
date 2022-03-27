@@ -38,6 +38,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.4.1'
     implementation 'androidx.navigation:navigation-ui:2.4.1'
     implementation 'androidx.preference:preference:1.2.0'
+    implementation 'com.google.firebase:firebase-firestore:21.4.0'
     def fragment_version = "1.4.1"
     // Java language implementation
     implementation "androidx.fragment:fragment:$fragment_version"

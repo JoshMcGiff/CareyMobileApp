@@ -26,4 +26,5 @@
     <string name="water_checks">Water Checks:</string>
     <string name="notify_me">Notify Me</string>
     <string name="failed_login">Login failed, leaderboard feature won\'t work!</string>
+    <string name="leaderboard_SearchPlaceholder">Search...</string>
 </resources>
