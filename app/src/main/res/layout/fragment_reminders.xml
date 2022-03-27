@@ -9,27 +9,31 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/reminders"
-        android:textAlignment="viewStart"
-        android:textSize="20sp"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="@string/water_checks"
-        android:textAlignment="viewStart"
+        android:text="Reminders"
+        android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="41dp" />
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switch1"
+    <TextView
+        android:id="@+id/waterCheckTitle"
+        android:layout_width="395dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="36dp"
+        android:text="Water Checks:"
+        android:textAlignment="viewStart"
+        android:textColor="#0062FF"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="8dp" />
+
+    <Switch
+        android:id="@+id/waterSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="136dp"
+        android:layout_marginStart="168dp"
         android:layout_marginTop="36dp"
+        android:textColorHighlight="#0000AD"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,22 +41,13 @@
         android:id="@+id/waterFrequency"
         android:layout_width="338dp"
         android:layout_height="27dp"
-        android:layout_marginStart="180dp"
+        android:layout_marginStart="236dp"
         android:layout_marginTop="36dp"
-        android:text="@string/minute_interval"
+        android:text="Every  minutes"
         android:textAlignment="viewStart"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/notify_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="136dp"
-        android:text="@string/notify_me"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
 
     <com.google.android.material.slider.Slider
         android:id="@+id/waterSlider"
@@ -62,6 +57,146 @@
         android:stepSize="5"
         android:valueFrom="0"
         android:valueTo="60"
+        app:labelBehavior="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:thumbColor="#0062FF"
+        app:tickColorActive="#0062FF"
+        app:tickColorInactive="#0062FF"
+        app:trackColorActive="#0062FF"
+        app:trackColorInactive="#8DB7FF" />
+
+    <Button
+        android:id="@+id/testWaterButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="99dp"
+        android:layout_marginTop="139dp"
+        android:text="Test Water Reminder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/testPostureButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="304dp"
+        android:text="Test Posture Reminder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/postureCheckTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="200dp"
+        android:text="Posture Checks:"
+        android:textAlignment="viewStart"
+        android:textColor="#0062FF"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Switch
+        android:id="@+id/postureSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="200dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/postureFrequency"
+        android:layout_width="338dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="240dp"
+        android:layout_marginTop="200dp"
+        android:text="Every  minutes"
+        android:textAlignment="viewStart"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/postureSlider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="240dp"
+        android:stepSize="5"
+        android:valueFrom="0"
+        android:valueTo="60"
+        app:labelBehavior="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:thumbColor="#0062FF"
+        app:tickColorInactive="#8DB7FF"
+        app:trackColorActive="#0062FF"
+        app:trackColorInactive="#8DB7FF" />
+
+    <Button
+        android:id="@+id/testStandButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="472dp"
+        android:text="Test Stand Reminder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Switch
+        android:id="@+id/standSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="372dp"
+        android:textColorHighlight="#0062FF"
+        android:textColorLink="#0062FF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/standFrequency"
+        android:layout_width="338dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="372dp"
+        android:text="Every  minutes"
+        android:textAlignment="viewStart"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/standSlider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="412dp"
+        android:stepSize="5"
+        android:valueFrom="0"
+        android:valueTo="60"
+        app:labelBehavior="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:thumbColor="#0062FF"
+        app:tickColorActive="#0062FF"
+        app:tickColorInactive="#0062FF"
+        app:tickVisible="true"
+        app:trackColorActive="#0062FF"
+        app:trackColorInactive="#8DB7FF" />
+
+    <TextView
+        android:id="@+id/standCheckTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="372dp"
+        android:text="Stand Checks:"
+        android:textAlignment="viewStart"
+        android:textColor="#0062FF"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -3,16 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/drawable/icon_leaderboard.xml" value="0.15" />
-        <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/drawable/icon_notifications.xml" value="0.15" />
-        <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/drawable/icon_reminders.xml" value="0.15" />
-        <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/drawable/icon_settings.xml" value="0.15" />
-        <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/layout/activity_main.xml" value="0.35176790571169536" />
-        <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/layout/fragment_leaderboard.xml" value="0.14010416666666667" />
-        <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/layout/fragment_maps.xml" value="0.14010416666666667" />
-        <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/layout/fragment_reminders.xml" value="0.14010416666666667" />
-        <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/layout/fragment_workouts.xml" value="0.12604166666666666" />
-        <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.14010416666666667" />
+        <entry key="..\:/Users/jbmcg/Documents/GitHub/CareyMobileApp/app/src/main/res/drawable/droplet_background.xml" value="0.225" />
+        <entry key="..\:/Users/jbmcg/Documents/GitHub/CareyMobileApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.225" />
+        <entry key="..\:/Users/jbmcg/Documents/GitHub/CareyMobileApp/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/jbmcg/Documents/GitHub/CareyMobileApp/app/src/main/res/layout/fragment_reminders.xml" value="0.24365942028985507" />
+        <entry key="..\:/Users/jbmcg/Documents/GitHub/CareyMobileApp/app/src/main/res/mipmap-anydpi-v26/droplet.xml" value="0.235" />
+        <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/layout/activity_main.xml" value="0.575" />
       </map>
     </option>
   </component>
