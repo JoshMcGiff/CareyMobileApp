@@ -3,10 +3,16 @@ package com.compscicoolkids.carey;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.android.gms.maps.model.LatLng;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +29,10 @@ public class WorkoutsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private View workoutsView;
+    private RecyclerView runsRecView;
+    private RunRecViewAdapter adapter;
 
     public WorkoutsFragment() {
         // Required empty public constructor
@@ -59,6 +69,19 @@ public class WorkoutsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_workouts, container, false);
+        workoutsView = inflater.inflate(R.layout.fragment_workouts, container, false);
+        adapter = new RunRecViewAdapter(this.getActivity());
+        runsRecView = workoutsView.findViewById(R.id.runsRecView);
+
+        runsRecView.setAdapter(adapter);
+        runsRecView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+
+        ArrayList<Run> runs = new ArrayList<>();
+        runs.add(new Run(0, new LatLng(-33.852, 151.211), new LatLng(-33.852, 151.211), 5.4, 30));
+        runs.add(new Run(1, new LatLng(-33.852, 151.211), new LatLng(-33.852, 151.211), 5.4, 30));
+        runs.add(new Run(2, new LatLng(-33.852, 151.211), new LatLng(-33.852, 151.211), 5.4, 30));
+        adapter.setRuns(runs);
+
+        return workoutsView;
     }
 }
