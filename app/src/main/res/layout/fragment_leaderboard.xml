@@ -31,7 +31,9 @@
         android:drawableStart="@drawable/icon_search"
         android:ems="10"
         android:hint="@string/leaderboard_SearchPlaceholder"
+        android:imeOptions="actionSearch"
         android:inputType="textPersonName"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:singleLine="true" />
 
 </TableLayout>

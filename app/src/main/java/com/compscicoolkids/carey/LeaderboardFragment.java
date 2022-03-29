@@ -8,12 +8,17 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -72,27 +77,42 @@ public class LeaderboardFragment extends Fragment {
         leaderboardView = inflater.inflate(R.layout.fragment_leaderboard, container, false);
         tableLayout = leaderboardView.findViewById(R.id.leaderboard_layout);
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("users")
-                .orderBy("points", Query.Direction.DESCENDING)
-                .limit(LEADERBOARD_LIMIT)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            int rank = 1;
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                //TableRow row = new TableRow();
-                                addLeaderboardRow(rank, document);
-                                rank++;
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
-                        }
+        EditText editText = leaderboardView.findViewById(R.id.editText_searchUser);
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    //Log.d(TAG, "Pressed search!");
+                    if (v.getText().length() > 0) {
+                        updateAllRows(v.getText().toString());
                     }
-                });
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) { }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                if (s.length() == 0) {
+                    updateAllRows("");
+                }
+                else {
+                    updateAllRows(s.toString());
+                }
+            }
+        });
+
+        updateAllRows("");
         return leaderboardView;
     }
 
@@ -138,5 +158,44 @@ public class LeaderboardFragment extends Fragment {
         }
 
         tableLayout.addView(row);
+    }
+
+    private void removeAllRows() {
+        for (int i = 0; i < tableLayout.getChildCount(); i++) {
+            View child = tableLayout.getChildAt(i);
+
+            if (child instanceof TableRow) {
+                tableLayout.removeView(child);
+                i--; //have to decrement i as the indexes for next View gets shifted
+            }
+        }
+    }
+
+    private void updateAllRows(@NonNull String userName) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Query query = db.collection("users");
+
+        if (!userName.isEmpty()) {
+            query = query.whereGreaterThanOrEqualTo("displayName", userName)
+                    .whereLessThan("displayName", userName + "z");
+            query = query.orderBy("displayName", Query.Direction.DESCENDING);
+        }
+
+        query.orderBy("points", Query.Direction.DESCENDING)
+            .limit(LEADERBOARD_LIMIT)
+            .get()
+            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        removeAllRows();
+                        int rank = 1;
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            addLeaderboardRow(rank, document);
+                            rank++;
+                        }
+                    }
+                }
+            });
     }
 }
