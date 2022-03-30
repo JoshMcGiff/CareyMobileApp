@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +16,17 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -40,6 +48,9 @@ public class AddRunsFragment extends Fragment implements OnMapReadyCallback {
 
     private MapView mapView;
     private View addRunsView;
+    private LatLng start;
+    private LatLng end;
+    private int routeStep;
 
     public AddRunsFragment() {
         // Required empty public constructor
@@ -66,11 +77,11 @@ public class AddRunsFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        routeStep = 0;
     }
 
     @SuppressLint("DefaultLocale")
@@ -104,11 +115,24 @@ public class AddRunsFragment extends Fragment implements OnMapReadyCallback {
         map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(@NonNull LatLng latLng) {
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(latLng);
-                map.clear();
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-                map.addMarker(markerOptions);
+                if(routeStep < 2){
+                    MarkerOptions markerOptions = new MarkerOptions();
+                    markerOptions.position(latLng);
+                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                    map.addMarker(markerOptions);
+                    if(routeStep == 0){
+                        start = latLng;
+                    }else{
+                        end = latLng;
+                        new FetchURL(addRunsView).execute(getUrl());
+                    }
+                    routeStep++;
+                }else{
+                    routeStep = 0;
+                    map.clear();
+                    TextView txtDistance = addRunsView.findViewById(R.id.distance_ran);
+                    txtDistance.setText("0 km");
+                }
             }
         });
     }
@@ -135,5 +159,20 @@ public class AddRunsFragment extends Fragment implements OnMapReadyCallback {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
+    }
+
+    @SuppressLint("DefaultLocale")
+    private String getCoord(LatLng coord){
+        return String.format("%.4f, %.4f", coord.latitude, coord.longitude);
+    }
+
+    private String getUrl() {
+        String str_origin = "origins=" + start.latitude + "," + start.longitude;
+        String str_dest = "destinations=" + end.latitude + "," + end.longitude;
+        String mode = "mode=walking";
+        String parameters = str_origin + "&" + str_dest + "&" + mode;
+        String output = "json";
+        String url = "https://maps.googleapis.com/maps/api/distancematrix/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
+        return url;
     }
 }

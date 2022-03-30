@@ -28,6 +28,9 @@
     <string name="failed_login">Login failed, leaderboard feature won\'t work!</string>
     <string name="leaderboard_SearchPlaceholder">Search...</string>
     <string name="back_to_runs">Back To Runs</string>
-    <string name="time_input_hint">Time (HH:MM)</string>
+    <string name="time_input_hint">Minutes Taken</string>
     <string name="date">DD/MM/YYYY</string>
+    <string name="google_maps_key">AIzaSyCs-aaKYZxT2VOR_R2RIE9BcwbGw5g1tAM</string>
+    <string name="map_hint">Tap on map to place start and finish</string>
+    <string name="distance_hint">Distance:</string>
 </resources>
