@@ -5,12 +5,22 @@
     android:id="@+id/main_navgraph"
     app:startDestination="@id/workouts">
 
-    <fragment
-        android:id="@+id/workouts"
-        android:name="com.compscicoolkids.carey.WorkoutsFragment"
-        android:label="fragment_workouts"
-        tools:layout="@layout/fragment_workouts" >
-    </fragment>
+    <navigation
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/workouts" app:startDestination="@id/runs">
+        <fragment
+            android:id="@+id/runs"
+            android:name="com.compscicoolkids.carey.RunsFragment"
+            android:label="fragment_runs"
+            tools:layout="@layout/fragment_runs" >
+        </fragment>
+        <fragment
+            android:id="@+id/add_runs"
+            android:name="com.compscicoolkids.carey.AddRunsFragment"
+            android:label="fragment_add_runs"
+            tools:layout="@layout/fragment_add_runs" >
+        </fragment>
+    </navigation>
     <fragment
         android:id="@+id/reminders"
         android:name="com.compscicoolkids.carey.RemindersFragment"
