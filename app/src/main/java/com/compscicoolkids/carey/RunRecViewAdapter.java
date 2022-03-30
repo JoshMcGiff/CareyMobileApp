@@ -43,7 +43,7 @@ public class RunRecViewAdapter extends RecyclerView.Adapter<RunRecViewAdapter.Vi
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(runs.get(position).getDate());
 
-        holder.txtDate.setText(String.format("%d/%d/%d", calendar.get(Calendar.DAY_OF_MONTH),calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR)));
+        holder.txtDate.setText(String.format("%d/%d/%d", calendar.get(Calendar.DAY_OF_MONTH),(calendar.get(Calendar.MONTH)+1), calendar.get(Calendar.YEAR)));
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
