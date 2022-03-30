@@ -1,8 +1,9 @@
 package com.compscicoolkids.carey;
-import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.squareup.okhttp.OkHttpClient;
@@ -37,7 +38,14 @@ public class FetchURL extends AsyncTask<String, Void, String> {
             Log.d("ROUTE", distance.getString("text"));
             TextView txtDistance = addRunsView.findViewById(R.id.distance_ran);
             txtDistance.setText(distance.getString("text"));
-
+            Button addRun = addRunsView.findViewById(R.id.add_run);
+            addRun.setClickable(true);
+            EditText minutesInput = addRunsView.findViewById(R.id.minutes_ran);
+            String content = minutesInput.getText().toString();
+            Log.d("MINUTES", content);
+            if(!content.equals("")){
+                addRun.setVisibility(View.VISIBLE);
+            }
         }catch(Exception e){
 
         }

@@ -38,17 +38,15 @@ public class RunRecViewAdapter extends RecyclerView.Adapter<RunRecViewAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Log.d(TAG, "onBindViewHolder: called");
-        holder.txtDistance.setText(String.format("%.02fkm", runs.get(position).getLength()));
+        holder.txtDistance.setText(runs.get(position).getLength());
         holder.txtTime.setText(String.format("%dmins", runs.get(position).getMinutes()));
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(runs.get(position).getDate());
 
-        holder.txtDate.setText(String.format("%d/%d/%d", calendar.get(Calendar.DAY_OF_MONTH),(calendar.get(Calendar.MONTH)+1), calendar.get(Calendar.YEAR)));
+        holder.txtDate.setText(runs.get(position).getDate());
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, runs.get(position).getId() + " selected.", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, "run selected.", Toast.LENGTH_SHORT).show();
             }
         });
     }

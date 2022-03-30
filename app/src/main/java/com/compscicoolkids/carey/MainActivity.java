@@ -103,4 +103,10 @@ public class MainActivity extends AppCompatActivity {
     public void toRuns(View view){
         navController.navigate(R.id.action_add_runs_to_runs);
     }
+
+    public void addRun(Run run){
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("run", run);
+        navController.navigate(R.id.action_add_runs_to_runs, bundle);
+    }
 }

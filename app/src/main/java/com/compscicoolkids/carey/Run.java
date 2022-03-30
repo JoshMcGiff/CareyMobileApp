@@ -1,44 +1,47 @@
 package com.compscicoolkids.carey;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.android.gms.maps.model.LatLng;
 
-import java.util.Date;
+import java.io.Serializable;
 
 
-public class Run {
-    private int id;
-    private Date date;
-    private LatLng start;
-    private LatLng end;
-    private double length;
-    private int minutes;
+public class Run implements Parcelable, Serializable {
+    private final String date;
+    private final String length;
+    private final int minutes;
 
-    public Run(int id, LatLng start, LatLng end, double length, int minutes) {
-        this.id = id;
-        this.date = new Date();
-        this.start = start;
-        this.end = end;
+    public Run(String date, String length, int minutes) {
         this.length = length;
         this.minutes = minutes;
+        this.date = date;
     }
 
-    public int getId() {
-        return id;
+    protected Run(Parcel in) {
+        date = in.readString();
+        length = in.readString();
+        minutes = in.readInt();
     }
 
-    public Date getDate() {
+    public static final Creator<Run> CREATOR = new Creator<Run>() {
+        @Override
+        public Run createFromParcel(Parcel in) {
+            return new Run(in);
+        }
+
+        @Override
+        public Run[] newArray(int size) {
+            return new Run[size];
+        }
+    };
+
+    public String getDate() {
         return date;
     }
 
-    public LatLng getStart() {
-        return start;
-    }
-
-    public LatLng getEnd() {
-        return end;
-    }
-
-    public double getLength() {
+    public String getLength() {
         return length;
     }
 
@@ -49,12 +52,21 @@ public class Run {
     @Override
     public String toString() {
         return "Run{" +
-                "id=" + id +
-                ", date=" + date +
-                ", start=" + start +
-                ", end=" + end +
+                "date=" + date +
                 ", length=" + length +
                 ", minutes=" + minutes +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(date);
+        parcel.writeString(length);
+        parcel.writeInt(minutes);
     }
 }

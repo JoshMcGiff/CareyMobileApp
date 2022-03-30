@@ -77,9 +77,9 @@ public class WorkoutsFragment extends Fragment {
         runsRecView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
         ArrayList<Run> runs = new ArrayList<>();
-        runs.add(new Run(0, new LatLng(-33.852, 151.211), new LatLng(-33.852, 151.211), 5.4, 30));
-        runs.add(new Run(1, new LatLng(-33.852, 151.211), new LatLng(-33.852, 151.211), 5.4, 30));
-        runs.add(new Run(2, new LatLng(-33.852, 151.211), new LatLng(-33.852, 151.211), 5.4, 30));
+        runs.add(new Run("24/03/2020", "5.4km", 30));
+        runs.add(new Run("24/03/2020", "5.4km", 30));
+        runs.add(new Run("24/03/2020", "5.4km", 30));
         adapter.setRuns(runs);
 
         return workoutsView;

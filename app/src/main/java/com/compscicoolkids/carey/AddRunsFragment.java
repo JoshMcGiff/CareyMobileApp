@@ -6,10 +6,13 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -18,13 +21,6 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.squareup.okhttp.Call;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -89,16 +85,48 @@ public class AddRunsFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         addRunsView = inflater.inflate(R.layout.fragment_add_runs, container, false);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         TextView runDate = addRunsView.findViewById(R.id.runDate);
         runDate.setText(String.format("%d/%d/%d", calendar.get(Calendar.DAY_OF_MONTH),(calendar.get(Calendar.MONTH)+1), calendar.get(Calendar.YEAR)));
-
         mapView = addRunsView.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
+        EditText minutesInput = addRunsView.findViewById(R.id.minutes_ran);
+        minutesInput.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.length() > 0 && routeStep == 2){
+                    Button addRun = addRunsView.findViewById(R.id.add_run);
+                    addRun.setClickable(true);
+                    addRun.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        Button addRun = addRunsView.findViewById(R.id.add_run);
+        addRun.setOnClickListener(v -> {
+            int minutes = Integer.parseInt(minutesInput.getText().toString());
+            TextView lengthDisplay = addRunsView.findViewById(R.id.distance_ran);
+            String length = lengthDisplay.getText().toString();
+            Calendar c = Calendar.getInstance();
+            c.setTime(new Date());
+            String date = String.format("%d/%d/%d", c.get(Calendar.DAY_OF_MONTH),(c.get(Calendar.MONTH)+1), c.get(Calendar.YEAR));
+            Run run = new Run(date, length, minutes);
+            MainActivity activity = (MainActivity) getActivity();
+            assert activity != null;
+            activity.addRun(run);
+        });
         return addRunsView;
     }
 
@@ -110,7 +138,8 @@ public class AddRunsFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap map) {
-
+        LatLng ul = new LatLng(52.6721418, -8.5734881);
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(ul, 13));
         //map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
         map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -118,7 +147,7 @@ public class AddRunsFragment extends Fragment implements OnMapReadyCallback {
                 if(routeStep < 2){
                     MarkerOptions markerOptions = new MarkerOptions();
                     markerOptions.position(latLng);
-                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
                     map.addMarker(markerOptions);
                     if(routeStep == 0){
                         start = latLng;
@@ -132,6 +161,9 @@ public class AddRunsFragment extends Fragment implements OnMapReadyCallback {
                     map.clear();
                     TextView txtDistance = addRunsView.findViewById(R.id.distance_ran);
                     txtDistance.setText("0 km");
+                    Button addRun = addRunsView.findViewById(R.id.add_run);
+                    addRun.setClickable(false);
+                    addRun.setVisibility(View.INVISIBLE);
                 }
             }
         });

@@ -12,6 +12,11 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 /**
@@ -33,6 +38,7 @@ public class RunsFragment extends Fragment {
     private View runsView;
     private RecyclerView runsRecView;
     private RunRecViewAdapter adapter;
+    private ArrayList<Run> runs = new ArrayList<>();
 
 
     public RunsFragment() {
@@ -60,27 +66,41 @@ public class RunsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*
+        runs.add(new Run("24/03/2020", "5.4km", 30));
+        runs.add(new Run("24/03/2020", "5.4km", 30));
+        runs.add(new Run("24/03/2020", "5.4km", 30));
+
+         */
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
+    public void onPause () {
+        super.onPause();
+
+    }
+
+    private void readRuns(){
+
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        if(getArguments() != null){
+            Run run = getArguments().getParcelable("run");
+            runs.add(run);
+        }
+
         runsView = inflater.inflate(R.layout.fragment_runs, container, false);
         adapter = new RunRecViewAdapter(this.getActivity());
         runsRecView = runsView.findViewById(R.id.runsRecView);
 
         runsRecView.setAdapter(adapter);
         runsRecView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-
-        ArrayList<Run> runs = new ArrayList<>();
-        runs.add(new Run(0, new LatLng(-33.852, 151.211), new LatLng(-33.852, 151.211), 5.4, 30));
-        runs.add(new Run(1, new LatLng(-33.852, 151.211), new LatLng(-33.852, 151.211), 5.4, 30));
-        runs.add(new Run(2, new LatLng(-33.852, 151.211), new LatLng(-33.852, 151.211), 5.4, 30));
         adapter.setRuns(runs);
 
         return runsView;
