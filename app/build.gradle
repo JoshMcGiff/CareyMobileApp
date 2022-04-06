@@ -34,11 +34,12 @@ apply plugin: 'com.google.gms.google-services'
 dependencies {
     implementation platform('com.google.firebase:firebase-bom:29.1.0')
     implementation 'com.firebaseui:firebase-ui-auth:8.0.0'
+    implementation 'com.google.android.gms:play-services-auth:20.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.navigation:navigation-fragment:2.4.1'
     implementation 'androidx.navigation:navigation-ui:2.4.1'
     implementation 'androidx.preference:preference:1.2.0'
-    implementation 'com.google.firebase:firebase-firestore:21.4.0'
+    implementation 'com.google.firebase:firebase-firestore:24.1.0'
     def fragment_version = "1.4.1"
     // Java language implementation
     implementation "androidx.fragment:fragment:$fragment_version"
