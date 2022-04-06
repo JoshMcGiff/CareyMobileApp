@@ -3,12 +3,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
+    <string name="user_header">User Settings</string>
 
     <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
+    <string name="username_title">Your Username</string>
 
     <!-- Sync Preferences -->
     <string name="sync_title">Sync email periodically</string>
@@ -26,11 +24,14 @@
     <string name="water_checks">Water Checks:</string>
     <string name="notify_me">Notify Me</string>
     <string name="failed_login">Login failed, leaderboard feature won\'t work!</string>
-    <string name="leaderboard_SearchPlaceholder">Search...</string>
+    <string name="leaderboard_SearchPlaceholder">Search…</string>
     <string name="back_to_runs">Back To Runs</string>
     <string name="time_input_hint">Minutes Taken</string>
     <string name="date">DD/MM/YYYY</string>
     <string name="google_maps_key">AIzaSyCs-aaKYZxT2VOR_R2RIE9BcwbGw5g1tAM</string>
     <string name="map_hint">Tap on map to place start and finish</string>
     <string name="distance_hint">Shortest Route Distance:</string>
+    <string name="logout">logout</string>
+    <string name="username">username</string>
+    <string name="run_distance">%d km</string>
 </resources>

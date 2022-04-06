@@ -21,26 +21,20 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AddRunsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class AddRunsFragment extends Fragment implements OnMapReadyCallback {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private MapView mapView;
     private View addRunsView;
@@ -52,31 +46,9 @@ public class AddRunsFragment extends Fragment implements OnMapReadyCallback {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AddRunsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AddRunsFragment newInstance(String param1, String param2) {
-        AddRunsFragment fragment = new AddRunsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
         routeStep = 0;
     }
 
@@ -123,8 +95,27 @@ public class AddRunsFragment extends Fragment implements OnMapReadyCallback {
             c.setTime(new Date());
             String date = String.format("%d/%d/%d", c.get(Calendar.DAY_OF_MONTH),(c.get(Calendar.MONTH)+1), c.get(Calendar.YEAR));
             Run run = new Run(date, length, minutes);
-            MainActivity activity = (MainActivity) getActivity();
-            assert activity != null;
+
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            assert user != null;
+
+            Map<String, Object> points = new HashMap<>();
+            db.collection("users").document(user.getUid())
+                    .get().addOnCompleteListener(queryDocumentSnapshots -> {
+                        long oldPoints = 0;
+                if (queryDocumentSnapshots.getResult().getData() != null) {
+                    //noinspection ConstantConditions
+                    oldPoints = (long) queryDocumentSnapshots.getResult().getData().get("points");
+                }
+                points.put("displayName", user.getDisplayName());
+                //average running speed is about 10km/h, 10km done in 60 minutes -> 100 points, 10km done in 120 minutes -> 50 points
+                points.put("points", oldPoints + (int) ((600 / (double) minutes) * Double.parseDouble(length.substring(0, length.length() - 3))));
+                db.collection("users").document(user.getUid())
+                        .set(points);
+            });
+
+            MainActivity activity = (MainActivity) requireActivity();
             activity.addRun(run);
         });
         return addRunsView;
@@ -141,30 +132,27 @@ public class AddRunsFragment extends Fragment implements OnMapReadyCallback {
         LatLng ul = new LatLng(52.6721418, -8.5734881);
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(ul, 13));
         //map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
-        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(@NonNull LatLng latLng) {
-                if(routeStep < 2){
-                    MarkerOptions markerOptions = new MarkerOptions();
-                    markerOptions.position(latLng);
-                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
-                    map.addMarker(markerOptions);
-                    if(routeStep == 0){
-                        start = latLng;
-                    }else{
-                        end = latLng;
-                        new FetchURL(addRunsView).execute(getUrl());
-                    }
-                    routeStep++;
+        map.setOnMapClickListener(latLng -> {
+            if(routeStep < 2){
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(latLng);
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
+                map.addMarker(markerOptions);
+                if(routeStep == 0){
+                    start = latLng;
                 }else{
-                    routeStep = 0;
-                    map.clear();
-                    TextView txtDistance = addRunsView.findViewById(R.id.distance_ran);
-                    txtDistance.setText("0 km");
-                    Button addRun = addRunsView.findViewById(R.id.add_run);
-                    addRun.setClickable(false);
-                    addRun.setVisibility(View.INVISIBLE);
+                    end = latLng;
+                    new FetchURL(addRunsView).execute(getUrl());
                 }
+                routeStep++;
+            }else{
+                routeStep = 0;
+                map.clear();
+                TextView txtDistance = addRunsView.findViewById(R.id.distance_ran);
+                txtDistance.setText(getString(R.string.run_distance, 0));
+                Button addRun = addRunsView.findViewById(R.id.add_run);
+                addRun.setClickable(false);
+                addRun.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -188,7 +176,7 @@ public class AddRunsFragment extends Fragment implements OnMapReadyCallback {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
     }
@@ -204,7 +192,6 @@ public class AddRunsFragment extends Fragment implements OnMapReadyCallback {
         String mode = "mode=walking";
         String parameters = str_origin + "&" + str_dest + "&" + mode;
         String output = "json";
-        String url = "https://maps.googleapis.com/maps/api/distancematrix/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
-        return url;
+        return "https://maps.googleapis.com/maps/api/distancematrix/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
     }
 }

@@ -8,11 +8,15 @@
         <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/drawable/icon_reminders.xml" value="0.15" />
         <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/drawable/icon_settings.xml" value="0.15" />
         <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/layout/activity_main.xml" value="0.35176790571169536" />
+        <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/layout/fragment_add_runs.xml" value="0.31979166666666664" />
         <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/layout/fragment_leaderboard.xml" value="0.14010416666666667" />
         <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/layout/fragment_maps.xml" value="0.14010416666666667" />
         <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/layout/fragment_reminders.xml" value="0.14010416666666667" />
+        <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/layout/fragment_runs.xml" value="0.31979166666666664" />
         <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/layout/fragment_workouts.xml" value="0.12604166666666666" />
+        <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/layout/list_item_run.xml" value="0.31979166666666664" />
         <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.14010416666666667" />
+        <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/xml/root_preferences.xml" value="0.38958333333333334" />
         <entry key="..\:/Users/shane/StudioProjects/CareyMobileApp/app/src/main/res/drawable-xxhdpi/icon_search.xml" value="0.332" />
         <entry key="..\:/Users/shane/StudioProjects/CareyMobileApp/app/src/main/res/drawable/droplet_background.xml" value="0.332" />
         <entry key="..\:/Users/shane/StudioProjects/CareyMobileApp/app/src/main/res/drawable/dropletblue_background.xml" value="0.332" />
@@ -23,17 +27,6 @@
         <entry key="..\:/Users/shane/StudioProjects/CareyMobileApp/app/src/main/res/layout/fragment_leaderboard.xml" value="0.264" />
         <entry key="..\:/Users/shane/StudioProjects/CareyMobileApp/app/src/main/res/layout/fragment_reminders.xml" value="0.264" />
         <entry key="..\:/Users/shane/StudioProjects/CareyMobileApp/app/src/main/res/xml/root_preferences.xml" value="0.24547101449275363" />
-        <entry key="..\:/Users/t9rea/AndroidStudioProjects/CareyMobileApp2/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/Users/t9rea/AndroidStudioProjects/CareyMobileApp2/app/src/main/res/layout/fragment_add_run.xml" value="0.22826086956521738" />
-        <entry key="..\:/Users/t9rea/AndroidStudioProjects/CareyMobileApp2/app/src/main/res/layout/fragment_add_runs.xml" value="0.2" />
-        <entry key="..\:/Users/t9rea/AndroidStudioProjects/CareyMobileApp2/app/src/main/res/layout/fragment_leaderboard.xml" value="0.25" />
-        <entry key="..\:/Users/t9rea/AndroidStudioProjects/CareyMobileApp2/app/src/main/res/layout/fragment_maps.xml" value="0.25" />
-        <entry key="..\:/Users/t9rea/AndroidStudioProjects/CareyMobileApp2/app/src/main/res/layout/fragment_reminders.xml" value="0.25" />
-        <entry key="..\:/Users/t9rea/AndroidStudioProjects/CareyMobileApp2/app/src/main/res/layout/fragment_runs.xml" value="0.22826086956521738" />
-        <entry key="..\:/Users/t9rea/AndroidStudioProjects/CareyMobileApp2/app/src/main/res/layout/fragment_workouts.xml" value="0.25" />
-        <entry key="..\:/Users/t9rea/AndroidStudioProjects/CareyMobileApp2/app/src/main/res/layout/list_item_run.xml" value="0.1" />
-        <entry key="..\:/Users/t9rea/AndroidStudioProjects/CareyMobileApp2/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.1" />
-        <entry key="..\:/Users/t9rea/AndroidStudioProjects/CareyMobileApp2/app/src/main/res/xml/root_preferences.xml" value="0.22826086956521738" />
       </map>
     </option>
   </component>
