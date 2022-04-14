@@ -15,13 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.maps.model.LatLng;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -81,6 +74,9 @@ public class RunsFragment extends Fragment {
 
     public void onPause () {
         super.onPause();
+        if(runs.size() > 0) {
+            writer.runsToBytes(runs);
+        }
     }
 
     public void onResume() {
