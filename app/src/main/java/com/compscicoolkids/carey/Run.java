@@ -69,4 +69,19 @@ public class Run implements Parcelable, Serializable {
         parcel.writeString(length);
         parcel.writeInt(minutes);
     }
+
+    @Override
+    public boolean equals(Object o){
+        if(o == this){
+            return true;
+        }
+
+        if(!(o instanceof Run)){
+            return false;
+        }
+
+        Run r = (Run) o;
+
+        return this.date.equals(r.getDate()) && this.minutes == r.getMinutes() && this.length.equals(r.getLength());
+    }
 }

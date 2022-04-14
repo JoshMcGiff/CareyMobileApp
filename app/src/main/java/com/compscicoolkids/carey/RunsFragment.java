@@ -4,6 +4,10 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +23,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,7 +35,8 @@ public class RunsFragment extends Fragment {
     private View runsView;
     private RecyclerView runsRecView;
     private RunRecViewAdapter adapter;
-    private ArrayList<Run> runs = new ArrayList<>();
+    private ArrayList<Run> runs;
+    private FileWriter writer;
 
 
     public RunsFragment() {
@@ -56,30 +62,61 @@ public class RunsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*
-        runs.add(new Run("24/03/2020", "5.4km", 30));
-        runs.add(new Run("24/03/2020", "5.4km", 30));
-        runs.add(new Run("24/03/2020", "5.4km", 30));
+        if (savedInstanceState != null) {
+            runs = savedInstanceState.getParcelableArrayList("RUNS");
+        } else {
+            writer = new FileWriter(this.requireContext());
+            runs = writer.bytesToRuns();
+            if (runs == null) {
+                runs = new ArrayList<Run>();
+            }
+        }
+    }
 
-         */
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("RUNS", runs);
     }
 
     public void onPause () {
         super.onPause();
-
     }
 
-    private void readRuns(){
-
+    public void onResume() {
+        super.onResume();
+        adapter.setRuns(runs);
     }
+
+    public void onDestroy() {
+        super.onDestroy();
+        if(runs.size() > 0) {
+            writer.runsToBytes(runs);
+        }
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        if(getArguments() != null){
-            Run run = getArguments().getParcelable("run");
-            runs.add(run);
-        }
+        NavController navController = NavHostFragment.findNavController(this);
+        // We use a String here, but any type that can be put in a Bundle is supported
+        MutableLiveData<Run> liveData = navController.getCurrentBackStackEntry()
+                .getSavedStateHandle()
+                .getLiveData("run");
+        liveData.observe(getViewLifecycleOwner(), new Observer<Run>() {
+            @Override
+            public void onChanged(Run run) {
+                // Do something with the result.
+                boolean runAdded = false;
+                for(Run r : runs){
+                    runAdded = r.equals(run);
+                }
+                if(!runAdded) {
+                    runs.add(run);
+                }
+            }
+        });
 
         runsView = inflater.inflate(R.layout.fragment_runs, container, false);
         adapter = new RunRecViewAdapter(this.getActivity());
