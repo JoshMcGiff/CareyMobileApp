@@ -1,7 +1,5 @@
 package com.compscicoolkids.carey;
 
-import static android.view.Gravity.CENTER;
-
 import android.content.Context;
 import android.os.Bundle;
 
@@ -10,7 +8,6 @@ import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -22,11 +19,10 @@ import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -76,6 +72,7 @@ public class LeaderboardFragment extends Fragment {
         // Inflate the layout for this fragment
         leaderboardView = inflater.inflate(R.layout.fragment_leaderboard, container, false);
         tableLayout = leaderboardView.findViewById(R.id.leaderboard_layout);
+        updateAllRows("");
 
         EditText editText = leaderboardView.findViewById(R.id.editText_searchUser);
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -112,7 +109,15 @@ public class LeaderboardFragment extends Fragment {
             }
         });
 
-        updateAllRows("");
+        TextView infoButton = leaderboardView.findViewById(R.id.leaderboardHeader);
+        infoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(),"Earn points and compete!",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"Points are generated based on your run distance and time!",Toast.LENGTH_LONG).show();
+            }
+        });
+
         return leaderboardView;
     }
 
