@@ -99,21 +99,26 @@ public class AddRunsFragment extends Fragment implements OnMapReadyCallback {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-            if(user != null){
+            if(user != null) {
                 Map<String, Object> points = new HashMap<>();
+
                 db.collection("users").document(user.getUid())
-                        .get().addOnCompleteListener(queryDocumentSnapshots -> {
-                            long oldPoints = 0;
-                    if (queryDocumentSnapshots.getResult().getData() != null) {
-                        //noinspection ConstantConditions
-                        oldPoints = (long) queryDocumentSnapshots.getResult().getData().get("points");
-                    }
-                    points.put("displayName", user.getDisplayName());
-                    //average running speed is about 10km/h, 10km done in 60 minutes -> 100 points, 10km done in 120 minutes -> 50 points
-                    points.put("points", oldPoints + (int) ((600 / (double) minutes) * Double.parseDouble(length.substring(0, length.length() - 3))));
-                    db.collection("users").document(user.getUid())
-                            .set(points);
-                });
+                    .get()
+                    .addOnCompleteListener(queryDocumentSnapshots -> {
+                        long oldPoints = 0;
+                        if (queryDocumentSnapshots.getResult().getData() != null) {
+                            //noinspection ConstantConditions
+                            oldPoints = (long) queryDocumentSnapshots.getResult().getData().get("points");
+                        }
+                        points.put("displayName", user.getDisplayName());
+
+                        //speed*distance, 10km done in 60 minutes -> 100 points
+                        double distance = Double.parseDouble(length.substring(0, length.length() - 3));
+                        double additionalPoints = (distance*distance)/((double)minutes/60);
+                        points.put("points", oldPoints + (int)additionalPoints);
+                        db.collection("users").document(user.getUid())
+                                .set(points);
+                    });
             }
             MainActivity activity = (MainActivity) requireActivity();
             activity.addRun(run);
