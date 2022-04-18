@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -96,14 +95,12 @@ public class RunsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         NavController navController = NavHostFragment.findNavController(this);
-        // We use a String here, but any type that can be put in a Bundle is supported
         MutableLiveData<Run> liveData = navController.getCurrentBackStackEntry()
                 .getSavedStateHandle()
                 .getLiveData("run");
         liveData.observe(getViewLifecycleOwner(), new Observer<Run>() {
             @Override
             public void onChanged(Run run) {
-                // Do something with the result.
                 boolean runAdded = false;
                 for(Run r : runs){
                     runAdded = r.equals(run);

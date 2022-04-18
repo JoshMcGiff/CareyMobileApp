@@ -3,8 +3,6 @@ package com.compscicoolkids.carey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import java.io.Serializable;
 
 

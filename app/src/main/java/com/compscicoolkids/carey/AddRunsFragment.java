@@ -133,7 +133,6 @@ public class AddRunsFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap map) {
         LatLng ul = new LatLng(52.6721418, -8.5734881);
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(ul, 13));
-        //map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
         map.setOnMapClickListener(latLng -> {
             if(routeStep < 2){
                 MarkerOptions markerOptions = new MarkerOptions();

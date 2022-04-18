@@ -1,4 +1,5 @@
 package com.compscicoolkids.carey;
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -17,7 +18,8 @@ import java.io.IOException;
 
 
 public class FetchURL extends AsyncTask<String, Void, String> {
-    private View addRunsView;
+    @SuppressLint("StaticFieldLeak")
+    private final View addRunsView;
 
     public FetchURL(View v) {
         this.addRunsView= v;
@@ -35,14 +37,12 @@ public class FetchURL extends AsyncTask<String, Void, String> {
             final JSONObject element = elementsData.getJSONObject(0);
             final JSONObject distance = element.getJSONObject("distance");
 
-            Log.d("ROUTE", distance.getString("text"));
             TextView txtDistance = addRunsView.findViewById(R.id.distance_ran);
             txtDistance.setText(distance.getString("text"));
             Button addRun = addRunsView.findViewById(R.id.add_run);
             addRun.setClickable(true);
             EditText minutesInput = addRunsView.findViewById(R.id.minutes_ran);
             String content = minutesInput.getText().toString();
-            Log.d("MINUTES", content);
             if(!content.equals("")){
                 addRun.setVisibility(View.VISIBLE);
             }
@@ -73,7 +73,6 @@ public class FetchURL extends AsyncTask<String, Void, String> {
         String data = "";
         try {
             data = downloadUrl(strings[0]);
-            Log.d("mylog", "Background task data " + data.toString());
         } catch (Exception e) {
             Log.d("Background Task", e.toString());
         }

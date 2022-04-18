@@ -7,24 +7,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 
 public class RunRecViewAdapter extends RecyclerView.Adapter<RunRecViewAdapter.ViewHolder>{
     private static final String TAG = "RunRecViewAdapter";
 
     private ArrayList<Run> runs = new ArrayList<>();
-    private Context mContext;
 
     public RunRecViewAdapter(Context mContext){
-        this.mContext = mContext;
     }
 
     @NonNull
@@ -37,18 +33,10 @@ public class RunRecViewAdapter extends RecyclerView.Adapter<RunRecViewAdapter.Vi
     @SuppressLint({"DefaultLocale", "SetTextI18n"})
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        Log.d(TAG, "onBindViewHolder: called");
         holder.txtDistance.setText(runs.get(position).getLength());
         holder.txtTime.setText(String.format("%dmins", runs.get(position).getMinutes()));
 
         holder.txtDate.setText(runs.get(position).getDate());
-
-        holder.parent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Toast.makeText(mContext, "run selected.", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override
@@ -61,15 +49,14 @@ public class RunRecViewAdapter extends RecyclerView.Adapter<RunRecViewAdapter.Vi
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        private CardView parent;
-        private TextView txtDate;
-        private TextView txtDistance;
-        private TextView txtTime;
+    public static class ViewHolder extends RecyclerView.ViewHolder{
+        private final TextView txtDate;
+        private final TextView txtDistance;
+        private final TextView txtTime;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            parent = itemView.findViewById(R.id.parent);
+            CardView parent = itemView.findViewById(R.id.parent);
             txtDate = itemView.findViewById(R.id.date);
             txtDistance = itemView.findViewById(R.id.distance);
             txtTime = itemView.findViewById(R.id.time);
