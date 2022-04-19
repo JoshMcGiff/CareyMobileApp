@@ -115,7 +115,7 @@ public class AddRunsFragment extends Fragment implements OnMapReadyCallback {
                         //speed*distance, 10km done in 60 minutes -> 100 points
                         double distance = Double.parseDouble(length.substring(0, length.length() - 3));
                         double additionalPoints = (distance*distance)/((double)minutes/60);
-                        points.put("points", oldPoints + (int)additionalPoints);
+                        points.put("points", oldPoints + (long)additionalPoints);
                         db.collection("users").document(user.getUid())
                                 .set(points);
                     });

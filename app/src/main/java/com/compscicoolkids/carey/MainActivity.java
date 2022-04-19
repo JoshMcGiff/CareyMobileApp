@@ -71,21 +71,22 @@ public class MainActivity extends AppCompatActivity {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
             assert response != null;
-            if (response.isNewUser()) { //if just signed up
+            if (response.isNewUser()) { //if user has just signed up, we create their profile here
                 assert user != null;
                 String userID = user.getUid();
                 String userName = user.getDisplayName();
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                DocumentReference userInfo = db.collection("users").document(userID); //creates a new document, name is userID
 
+                /* Creates a new document, doc name is userID; Otherwise a random UUID is used and we would have no way of identifying user profiles  */
+                DocumentReference userInfo = db.collection("users").document(userID);
 
                 Map<String, Object> profile = new HashMap<>();
-                profile.put("points", 0); //start with 0 points
-                assert userName != null;
-                profile.put("displayName", userName.isEmpty() ? "Anonymous" : userName);
+                profile.put("points", 0); //Every user start with 0 points
+                profile.put("displayName", userName == null || userName.isEmpty() ? "Anonymous" : userName);
 
-                userInfo.set(profile).addOnSuccessListener(aVoid -> Toast.makeText(getApplicationContext(), "Set up User Profile!", Toast.LENGTH_LONG).show())
+                userInfo.set(profile)
+                .addOnSuccessListener(aVoid -> Toast.makeText(getApplicationContext(), "Set up User Profile!", Toast.LENGTH_LONG).show())
                 .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "Setup User Profile Failed!", Toast.LENGTH_LONG).show());
             }
 
