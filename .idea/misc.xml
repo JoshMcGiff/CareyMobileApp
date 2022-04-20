@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/drawable/droplet_background.xml" value="0.2525" />
         <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/drawable/icon_leaderboard.xml" value="0.15" />
         <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/drawable/icon_notifications.xml" value="0.15" />
         <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/drawable/icon_reminders.xml" value="0.15" />
@@ -11,7 +12,7 @@
         <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/layout/fragment_add_runs.xml" value="0.31979166666666664" />
         <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/layout/fragment_leaderboard.xml" value="0.14010416666666667" />
         <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/layout/fragment_maps.xml" value="0.14010416666666667" />
-        <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/layout/fragment_reminders.xml" value="0.14010416666666667" />
+        <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/layout/fragment_reminders.xml" value="0.22" />
         <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/layout/fragment_runs.xml" value="0.31979166666666664" />
         <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/layout/fragment_workouts.xml" value="0.12604166666666666" />
         <entry key="..\:/Users/pgnma/StudioProjects/CareyMobileApp/app/src/main/res/layout/list_item_run.xml" value="0.31979166666666664" />
