@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Map<String, Object> profile = new HashMap<>();
                 profile.put("points", 0); //Every user start with 0 points
-                profile.put("displayName", userName == null || userName.isEmpty() ? "Anonymous" : userName);
+                profile.put("displayName", userName == null || userName.isEmpty() ? "Anonymous" : userName); //if user has no name, we use Anonymous
 
                 userInfo.set(profile)
                 .addOnSuccessListener(aVoid -> Toast.makeText(getApplicationContext(), "Set up User Profile!", Toast.LENGTH_LONG).show())
