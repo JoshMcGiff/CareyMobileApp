@@ -62,6 +62,7 @@ public class AddRunsFragment extends Fragment implements OnMapReadyCallback {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         TextView runDate = addRunsView.findViewById(R.id.runDate);
+        //set date on screen to current date
         runDate.setText(String.format("%d/%d/%d", calendar.get(Calendar.DAY_OF_MONTH),(calendar.get(Calendar.MONTH)+1), calendar.get(Calendar.YEAR)));
         mapView = addRunsView.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
@@ -79,6 +80,7 @@ public class AddRunsFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.length() > 0 && routeStep == 2){
+                    //set add run button to visible if minutes is valid
                     Button addRun = addRunsView.findViewById(R.id.add_run);
                     addRun.setClickable(true);
                     addRun.setVisibility(View.VISIBLE);
@@ -88,6 +90,7 @@ public class AddRunsFragment extends Fragment implements OnMapReadyCallback {
 
         Button addRun = addRunsView.findViewById(R.id.add_run);
         addRun.setOnClickListener(v -> {
+            //get information needed to create run object
             int minutes = Integer.parseInt(minutesInput.getText().toString());
             TextView lengthDisplay = addRunsView.findViewById(R.id.distance_ran);
             String length = lengthDisplay.getText().toString();
@@ -121,6 +124,7 @@ public class AddRunsFragment extends Fragment implements OnMapReadyCallback {
                     });
             }
             MainActivity activity = (MainActivity) requireActivity();
+            //get main activity to add a run
             activity.addRun(run);
 
 
@@ -136,22 +140,27 @@ public class AddRunsFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap map) {
+        //latitude and longitude object with ULs coordinates
         LatLng ul = new LatLng(52.6721418, -8.5734881);
+        //zoom into UL
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(ul, 13));
         map.setOnMapClickListener(latLng -> {
             if(routeStep < 2){
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(latLng);
+                //move to marker
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
                 map.addMarker(markerOptions);
                 if(routeStep == 0){
                     start = latLng;
                 }else{
                     end = latLng;
+                    //get distance between start and end
                     new FetchURL(addRunsView).execute(getUrl());
                 }
                 routeStep++;
             }else{
+                //user tapped on map again, reset everything
                 routeStep = 0;
                 map.clear();
                 TextView txtDistance = addRunsView.findViewById(R.id.distance_ran);
@@ -187,12 +196,8 @@ public class AddRunsFragment extends Fragment implements OnMapReadyCallback {
         mapView.onSaveInstanceState(outState);
     }
 
-    @SuppressLint("DefaultLocale")
-    private String getCoord(LatLng coord){
-        return String.format("%.4f, %.4f", coord.latitude, coord.longitude);
-    }
-
     private String getUrl() {
+        //distance matrix api url
         String str_origin = "origins=" + start.latitude + "," + start.longitude;
         String str_dest = "destinations=" + end.latitude + "," + end.longitude;
         String mode = "mode=walking";

@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import java.io.Serializable;
 
-
+//class which represents a run object
 public class Run implements Parcelable, Serializable {
     private final String date;
     private final String length;

@@ -22,6 +22,7 @@ public class FileWriter {
     }
 
     public void runsToBytes(ArrayList<Run> runs){
+        //convert arraylist to data to be written to file
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ObjectOutputStream out;
         byte[] runsToBytes = null;
@@ -35,6 +36,7 @@ public class FileWriter {
         } finally {
             try {
                 bos.close();
+                //write runs to file
                 writeRuns(runsToBytes);
             } catch (IOException ex) {
                 // ignore close exception
@@ -43,6 +45,7 @@ public class FileWriter {
     }
 
     private void writeRuns(byte[] runsBytes){
+        //write data to file
         try {
             FileOutputStream writer = new FileOutputStream(new File(path, fileName));
             writer.write(runsBytes);
@@ -53,6 +56,7 @@ public class FileWriter {
     }
 
     public ArrayList<Run> bytesToRuns(){
+        //read runs file and return an arraylist of runs
         File readFrom = new File(path, fileName);
         byte[] runsContents =  new byte[(int) readFrom.length()];
         try {
@@ -63,9 +67,11 @@ public class FileWriter {
             return null;
         }
         ByteArrayInputStream bis = new ByteArrayInputStream(runsContents);
+        //get arraylist from the object input stream
         try (ObjectInput in = new ObjectInputStream(bis)) {
             Object o = in.readObject();
             if (o instanceof ArrayList) {
+                //cast object to arraylist of runs
                 return (ArrayList<Run>) o;
             }
         } catch (IOException | ClassNotFoundException e) {

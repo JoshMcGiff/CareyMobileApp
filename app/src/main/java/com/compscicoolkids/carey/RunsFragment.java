@@ -55,11 +55,14 @@ public class RunsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
+            //set runs array
             runs = savedInstanceState.getParcelableArrayList("RUNS");
         } else {
+            //check if runs are saved to file
             writer = new FileWriter(this.requireContext());
             runs = writer.bytesToRuns();
             if (runs == null) {
+                //initiate runs as empty
                 runs = new ArrayList<Run>();
             }
         }
@@ -74,6 +77,7 @@ public class RunsFragment extends Fragment {
     public void onPause () {
         super.onPause();
         if(runs.size() > 0) {
+            //write runs to file
             writer.runsToBytes(runs);
         }
     }
@@ -95,9 +99,11 @@ public class RunsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         NavController navController = NavHostFragment.findNavController(this);
+
         MutableLiveData<Run> liveData = navController.getCurrentBackStackEntry()
                 .getSavedStateHandle()
                 .getLiveData("run");
+        //listen for changes to run so that we can add runs to the list
         liveData.observe(getViewLifecycleOwner(), new Observer<Run>() {
             @Override
             public void onChanged(Run run) {
@@ -115,8 +121,10 @@ public class RunsFragment extends Fragment {
         adapter = new RunRecViewAdapter(this.getActivity());
         runsRecView = runsView.findViewById(R.id.runsRecView);
 
+        //set adapter for recycler view
         runsRecView.setAdapter(adapter);
         runsRecView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        //set runs for view
         adapter.setRuns(runs);
 
         return runsView;

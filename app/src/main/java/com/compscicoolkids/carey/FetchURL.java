@@ -18,6 +18,7 @@ import java.io.IOException;
 
 
 public class FetchURL extends AsyncTask<String, Void, String> {
+    //async task used for calling google maps distance matrix api
     @SuppressLint("StaticFieldLeak")
     private final View addRunsView;
 
@@ -30,6 +31,7 @@ public class FetchURL extends AsyncTask<String, Void, String> {
         Log.d("ROUTE", s);
         super.onPostExecute(s);
         try{
+            //get the data we need from what the call returned
             JSONObject jsonObject = new JSONObject(s);
             final JSONArray rowData = jsonObject.getJSONArray("rows");
             final JSONObject row = rowData.getJSONObject(0);
@@ -38,12 +40,14 @@ public class FetchURL extends AsyncTask<String, Void, String> {
             final JSONObject distance = element.getJSONObject("distance");
 
             TextView txtDistance = addRunsView.findViewById(R.id.distance_ran);
+            //set the distance text on screen to what was returned
             txtDistance.setText(distance.getString("text"));
             Button addRun = addRunsView.findViewById(R.id.add_run);
             addRun.setClickable(true);
             EditText minutesInput = addRunsView.findViewById(R.id.minutes_ran);
             String content = minutesInput.getText().toString();
             if(!content.equals("")){
+                //allow user to add run if they have already set minutes input
                 addRun.setVisibility(View.VISIBLE);
             }
         }catch(Exception e){
@@ -54,6 +58,7 @@ public class FetchURL extends AsyncTask<String, Void, String> {
     private String downloadUrl(String urlStr) throws IOException {
         String data = "";
         try {
+            //create http request and execute
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
                     .url(urlStr)

@@ -33,6 +33,7 @@ public class RunRecViewAdapter extends RecyclerView.Adapter<RunRecViewAdapter.Vi
     @SuppressLint({"DefaultLocale", "SetTextI18n"})
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        //set run data to run card
         holder.txtDistance.setText(runs.get(position).getLength());
         holder.txtTime.setText(String.format("%dmins", runs.get(position).getMinutes()));
 
