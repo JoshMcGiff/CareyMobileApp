@@ -36,10 +36,9 @@ import java.util.Map;
  * create an instance of this fragment.
  */
 public class LeaderboardFragment extends Fragment {
+    //Allows us to easily configure the amount shown on the leaderboard
     private static final long LEADERBOARD_LIMIT = 10;
-    public static final String TAG = "LeaderboardFragment";
 
-    private View leaderboardView;
     private TableLayout tableLayout;
 
     public LeaderboardFragment() {
@@ -52,7 +51,6 @@ public class LeaderboardFragment extends Fragment {
      *
      * @return A new instance of fragment Leaderboard.
      */
-    // TODO: Rename and change types and number of parameters
     public static LeaderboardFragment newInstance() {
         LeaderboardFragment fragment = new LeaderboardFragment();
         Bundle args = new Bundle();
@@ -63,25 +61,23 @@ public class LeaderboardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        leaderboardView = inflater.inflate(R.layout.fragment_leaderboard, container, false);
-        tableLayout = leaderboardView.findViewById(R.id.leaderboard_layout);
-        updateAllRows("");
+        View leaderboardView = inflater.inflate(R.layout.fragment_leaderboard, container, false);
+        tableLayout = leaderboardView.findViewById(R.id.leaderboard_layout); //Get the table layout view
+        updateAllRows(""); //Initialise leaderboard rows, blank userName means not searching by username
 
         EditText editText = leaderboardView.findViewById(R.id.editText_searchUser);
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    //Log.d(TAG, "Pressed search!");
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) { //If the search button is pressed on the keyboard
                     if (v.getText().length() > 0) {
-                        updateAllRows(v.getText().toString());
+                        updateAllRows(v.getText().toString()); //update leaderboard rows view, search by userName
                     }
                     return true;
                 }
@@ -94,17 +90,16 @@ public class LeaderboardFragment extends Fragment {
             public void afterTextChanged(Editable s) { }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
+            /* When user enters text into search bar, dynamically update UI */
             @Override
-            public void onTextChanged(CharSequence s, int start,
-                                      int before, int count) {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() == 0) {
-                    updateAllRows("");
+                    updateAllRows(""); //No searching by username
                 }
                 else {
-                    updateAllRows(s.toString());
+                    updateAllRows(s.toString()); //search by userName entered by user
                 }
             }
         });
@@ -121,15 +116,18 @@ public class LeaderboardFragment extends Fragment {
         return leaderboardView;
     }
 
+    /* converts dp values to px, needed for creating dynamic UI */
     private int dpToPx(int dp, Context context) {
         float density = context.getResources().getDisplayMetrics().density;
         return Math.round((float) dp * density);
     }
 
+    /* Sets-up and adds a TableRow to the leaderboard table layout */
     private void addLeaderboardRow(int rank, QueryDocumentSnapshot document) {
         Map<String, Object> map = document.getData();
         TableRow row = new TableRow(tableLayout.getContext());
 
+        //Create the ranking/search result TextView to be displayed
         {
             TextView rankText = new TextView(row.getContext());
             rankText.setText("#" + rank);
@@ -140,6 +138,7 @@ public class LeaderboardFragment extends Fragment {
             row.addView(rankText);
         }
 
+        //Create the username TextView to be displayed
         {
             TextView usernameText = new TextView(row.getContext());
             String username = (String)map.get("displayName");
@@ -151,6 +150,7 @@ public class LeaderboardFragment extends Fragment {
             row.addView(usernameText);
         }
 
+        //Create the user points TextView to be displayed
         {
             TextView pointsText = new TextView(row.getContext());
             long points = (long)map.get("points");
@@ -162,27 +162,35 @@ public class LeaderboardFragment extends Fragment {
             row.addView(pointsText);
         }
 
-        tableLayout.addView(row);
+        tableLayout.addView(row); //Add the row to the table layout
     }
 
+    /* Removes all TableRow views from the table layout UI. Used when needing to update the UI with new info */
     private void removeAllRows() {
         for (int i = 0; i < tableLayout.getChildCount(); i++) {
             View child = tableLayout.getChildAt(i);
 
             if (child instanceof TableRow) {
                 tableLayout.removeView(child);
-                i--; //have to decrement i as the indexes for next View gets shifted
+                i--; //have to decrement i as the indexes for the next View gets shifted
             }
         }
     }
 
+    /* The main function that interacts with the leaderboard.
+    *  1) Gets the Firestore "users" collection
+    *  2) Filters Firestore by username if needed
+    *  3) Orders Firestore from highest points to lowest, limiting it to LEADERBOARD_LIMIT
+    *  4) removeAllRows removes all TableRow Views
+    *  5) Add the Firestore results to the table layout View
+    */
     private void updateAllRows(@NonNull String userName) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Query query = db.collection("users");
 
-        if (!userName.isEmpty()) {
+        if (!userName.isEmpty()) { //If empty, we are not searching by username
             query = query.whereGreaterThanOrEqualTo("displayName", userName)
-                    .whereLessThan("displayName", userName + "z");
+                    .whereLessThan("displayName", userName + "z"); //adding "z" is necessary so that the string comparison works properly, see ASCII Table
             query = query.orderBy("displayName", Query.Direction.DESCENDING);
         }
 
@@ -193,8 +201,8 @@ public class LeaderboardFragment extends Fragment {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if (task.isSuccessful()) {
-                        removeAllRows();
-                        int rank = 1;
+                        removeAllRows(); //remove all rows from UI
+                        int rank = 1; //start at rank 1
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             addLeaderboardRow(rank, document);
                             rank++;
