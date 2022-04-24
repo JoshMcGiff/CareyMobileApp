@@ -44,21 +44,19 @@ import java.util.concurrent.TimeUnit;
  */
 public class RemindersFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
+    // Water reminder-related variables
     private TextView waterFrequency;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch waterSwitch;
     private int waterIntervals;
 
+    // Posture reminder-related variables
     private TextView postureFrequency;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch postureSwitch;
     private int postureIntervals;
 
+    // Stand reminder-related variables
     private TextView standFrequency;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch standSwitch;
@@ -79,11 +77,8 @@ public class RemindersFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment Reminders.
      */
-    // TODO: Rename and change types and number of parameters
     public static RemindersFragment newInstance() {
         RemindersFragment fragment = new RemindersFragment();
         return fragment;
@@ -185,7 +180,7 @@ public class RemindersFragment extends Fragment {
             myEdit.commit();
         });
 
-        // Test water check button listener
+        // Test posture check button listener
         postureButton.setOnClickListener(x -> {
             sendPostureReminder();
         });
@@ -226,7 +221,7 @@ public class RemindersFragment extends Fragment {
             myEdit.commit();
         });
 
-        // Test water check button listener
+        // Test stand check button listener
         standButton.setOnClickListener(x -> {
             sendStandReminder();
         });
@@ -261,6 +256,7 @@ public class RemindersFragment extends Fragment {
         return runnable;
     }
 
+    // The following functions are responsible for building the notifications for: water, posture and stand reminders
     private void sendWaterReminder(){
         if( Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
             NotificationChannel channel = new NotificationChannel("Water Reminder", "Water Reminder", NotificationManager.IMPORTANCE_HIGH);
@@ -390,7 +386,7 @@ public class RemindersFragment extends Fragment {
             scheduledFutureStand.cancel(false);
         }
     }
-
+    // Logic for updating the various reminder interval sliders based on dragging interactions for: water, posture and standing checks
     private final Slider.OnSliderTouchListener touchListenerWater =
             new Slider.OnSliderTouchListener() {
                 @Override
@@ -410,8 +406,6 @@ public class RemindersFragment extends Fragment {
                         waterIntervals = (int) slider.getValue();
                         myEdit.putInt("waterReminderInterval", waterIntervals);
                     }
-
-
 
                     myEdit.commit();
 
@@ -446,8 +440,6 @@ public class RemindersFragment extends Fragment {
                         myEdit.putInt("postureReminderInterval", postureIntervals);
                     }
 
-
-
                     myEdit.commit();
 
                     postureFrequency.setText("Every " + postureIntervals + " minutes");
@@ -477,8 +469,6 @@ public class RemindersFragment extends Fragment {
                         standIntervals = (int) slider.getValue();
                         myEdit.putInt("standReminderInterval", standIntervals);
                     }
-
-
 
                     myEdit.commit();
 
